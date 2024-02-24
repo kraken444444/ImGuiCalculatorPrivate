@@ -10,7 +10,7 @@ int main()
 	// Select C/C++ -> General -> Addition Include Directories
 	// C:\wxWidgets\include;C:\wxWidgets\include\msvc
 	// Select Linker -> Additional Library Dependencies
-	// C:\wxWidgets\lib\vc_lib;C:\wxWidgets\lib\vc_x64_lib
+	// C:\wxWidgets\lib\vc_lib; (If building for 64-bit, use 64-bit libraries throughout the settings e.g. C:\wxWidgets\lib\vc_x64_lib )
 	// Select Linker -> System -> Subsystem
 	// Change from Console to Windows
 
