@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SWE_App.cpp">
+    <ClCompile Include="ImGuiCalculator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\imguiSource\imgui.cpp">
@@ -39,25 +39,16 @@
     <ClCompile Include="..\..\imguiSource\backends\imgui_impl_sdlrenderer2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CalculatorHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="..\..\ImGuiDemo\SDL2.dll">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="..\..\ImGuiDemo\SDL2.pdb">
-      <Filter>Source Files</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\..\ImGuiDemo\SDL2.lib">
-      <Filter>Source Files</Filter>
-    </Library>
-    <Library Include="..\..\ImGuiDemo\SDL2main.lib">
-      <Filter>Source Files</Filter>
-    </Library>
-    <Library Include="..\..\ImGuiDemo\SDL2test.lib">
-      <Filter>Source Files</Filter>
-    </Library>
+    <ClInclude Include="CalculatorHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
