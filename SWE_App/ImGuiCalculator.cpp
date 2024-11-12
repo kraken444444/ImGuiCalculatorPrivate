@@ -162,7 +162,7 @@ int main(int, char**)
 
                 if (ImGui::Button("0", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "0"); }
                 ImGui::SameLine();
-                if (ImGui::Button(".", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "."); }
+                if (ImGui::Button(".", basicButton)) { calculateHelper.AddDecimal(inputBuffer, IM_ARRAYSIZE(inputBuffer)); }
                 ImGui::SameLine();
                 if (ImGui::Button("=", basicButton)) { 
 

@@ -31,13 +31,32 @@ void CalculatorHelper::Clear(char* inputBuffer)
 void CalculatorHelper::Backspace(char* inputBuffer)
 {
 	unsigned int len = strlen(inputBuffer);
-	if (len > 0) {
+
+	if (len == 0) { return; };
+	if (len >= 4) {
+		std::string endOfInput = std::string(inputBuffer + len - 4);
+		if (endOfInput == "sin " || endOfInput == "cos " || endOfInput == "tan ") {
+			inputBuffer[len - 4] = '\0';
+		}
+
+	}
+	else {
+
 		inputBuffer[len - 1] = '\0';
 	}
 }
 
 void CalculatorHelper::AddDecimal(char* inputBuffer, unsigned int bufferSize)
 {
+	std::string current(inputBuffer);
+	if (current.find('.')) {
+		if (strlen(inputBuffer) == 0) {
+			snprintf(inputBuffer, bufferSize, "0.");
+		}
+		else {
+			strncat_s(inputBuffer, bufferSize, ".", 1);
+		}
+	}
 }
 
 void CalculatorHelper::ToggleNegative(char* inputBuffer, unsigned int bufferSize)

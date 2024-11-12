@@ -3,6 +3,7 @@
 #include <stack>
 #include <cstring>
 #include <sstream>
+#include <cmath>
 class CalculatorHelper
 {
 public:
