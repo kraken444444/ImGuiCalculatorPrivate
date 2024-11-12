@@ -8,6 +8,7 @@
 #include <SDL_config_windows.h>
 #include <SDL_syswm.h>
 #include <unordered_map>
+#include "CalculatorHelper.h"
 
 
 int main(int, char**)
@@ -54,17 +55,13 @@ int main(int, char**)
     bool done = false;
 
 
-
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////DECLARATIONS
 
     static char inputBuffer[512] = "";
     ImVec2 basicButton(100, 50);
      ImVec4 window_color = ImVec4(0.264f, 0.247f, 0.311f, 1.0f);
      bool startingWindow = true;
-
+     CalculatorHelper calculateHelper;
 
      
 
@@ -100,7 +97,8 @@ int main(int, char**)
 
         static ImVec4 window_color = ImVec4(0.264f, 0.247f, 0.311f, 1.0f);
 
-
+        ImGui::GetStyle().AntiAliasedFill = false;
+        ImGui::GetStyle().AntiAliasedLines = false;
 
         
 
@@ -113,7 +111,12 @@ int main(int, char**)
                 ImGui::SetWindowFontScale(4.0f);
                 ImGui::InputTextMultiline("##Display", inputBuffer, IM_ARRAYSIZE(inputBuffer), ImVec2(330, 75), ImGuiInputTextFlags_ReadOnly);
                 ImGui::SetWindowFontScale(1.0f);
-                if (ImGui::Button("C", basicButton)) {};
+
+                if (ImGui::Button("C", basicButton)) {}ImGui::SameLine();
+                if (ImGui::Button("sin", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "sin "); }ImGui::SameLine();
+                if (ImGui::Button("cos", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "cos "); }ImGui::SameLine();
+                if (ImGui::Button("tan", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "tan "); }
+
                 if (ImGui::Button("7", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "7"); } ImGui::SameLine();
                 if (ImGui::Button("8", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "8"); } ImGui::SameLine();
                 if (ImGui::Button("9", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "9"); } ImGui::SameLine();
@@ -129,9 +132,15 @@ int main(int, char**)
                 if (ImGui::Button("3", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "3"); } ImGui::SameLine();
                 if (ImGui::Button("-", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "-"); }
 
+
                 if (ImGui::Button("0", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "0"); } ImGui::SameLine();
                 if (ImGui::Button(".", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "."); } ImGui::SameLine();
-                if (ImGui::Button("=", basicButton)) { /* Add evaluation logic here */ } ImGui::SameLine();
+
+                if (ImGui::Button("=", basicButton)) { 
+
+                    calculateHelper.EvaluateExpression(inputBuffer, IM_ARRAYSIZE(inputBuffer));
+
+                } ImGui::SameLine();
                 if (ImGui::Button("+", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "+"); }
 
 
