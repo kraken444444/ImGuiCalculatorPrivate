@@ -123,11 +123,11 @@ int main(int, char**)
 
                 if (ImGui::Button("<-", basicButton)) { calculateHelper.Backspace(inputBuffer); }
                 ImGui::SameLine();
-                if (ImGui::Button("sin ", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "sin "); }
+                if (ImGui::Button("sin", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "sin "); }
                 ImGui::SameLine();
-                if (ImGui::Button("cos ", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "cos "); }
+                if (ImGui::Button("cos", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "cos "); }
                 ImGui::SameLine();
-                if (ImGui::Button("tan ", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "tan "); }
+                if (ImGui::Button("tan", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "tan "); }
 
 
 

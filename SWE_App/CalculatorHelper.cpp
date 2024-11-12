@@ -1,5 +1,5 @@
 #include "CalculatorHelper.h"
-#define M_PI   3.14159265358979323846264338327950288
+#define M_PI 3.14159265358979323846
 
 double CalculatorHelper::EvaluateExpression(char* inputBuffer, unsigned int bufferSize)
 {
@@ -78,6 +78,21 @@ void CalculatorHelper::AddDecimal(char* inputBuffer, unsigned int bufferSize)
 
 void CalculatorHelper::ToggleNegative(char* inputBuffer, unsigned int bufferSize)
 {
+	std::string current(inputBuffer);
+	if (current.empty()) {
+		snprintf(inputBuffer, bufferSize, "-");
+	}
+	else if (current[0] == '-') {
+		current = current.substr(1);
+		snprintf(inputBuffer, bufferSize, "%s", current.c_str());
+	}
+	else {
+		std::string temp = "-" + current;
+		snprintf(inputBuffer, bufferSize, "%s", temp.c_str());
+
+	}
+
+
 }
 
 bool CalculatorHelper::IsUnaryOperator(const std::string& op)
@@ -86,11 +101,11 @@ bool CalculatorHelper::IsUnaryOperator(const std::string& op)
 }
 double CalculatorHelper::EvaluateUnaryOperation(const std::string& oper, double value)
 {
-	double radian = value * M_PI / 180.0;
+	//double radian = value * M_PI / 180.0;
 
-	if (oper == "sin") return sin(radian);
-	if (oper == "cos") return cos(radian);
-	if (oper == "tan") return tan(radian);
+	if (oper == "sin") return sin(value);
+	if (oper == "cos") return cos(value);
+	if (oper == "tan") return tan(value);
 	
 
 	return value;
