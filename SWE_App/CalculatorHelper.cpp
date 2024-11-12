@@ -22,3 +22,29 @@ double CalculatorHelper::EvaluateExpression(char* inputBuffer, unsigned int buff
 	return result;
 
 }
+
+void CalculatorHelper::Clear(char* inputBuffer)
+{
+	inputBuffer[0] = '\0';
+}
+
+void CalculatorHelper::Backspace(char* inputBuffer)
+{
+	unsigned int len = strlen(inputBuffer);
+	if (len > 0) {
+		inputBuffer[len - 1] = '\0';
+	}
+}
+
+void CalculatorHelper::AddDecimal(char* inputBuffer, unsigned int bufferSize)
+{
+}
+
+void CalculatorHelper::ToggleNegative(char* inputBuffer, unsigned int bufferSize)
+{
+}
+
+bool CalculatorHelper::IsUnaryOperator(const std::string& op)
+{
+	return false;
+}

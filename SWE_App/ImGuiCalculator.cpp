@@ -111,31 +111,59 @@ int main(int, char**)
                 ImGui::SetWindowFontScale(4.0f);
                 ImGui::InputTextMultiline("##Display", inputBuffer, IM_ARRAYSIZE(inputBuffer), ImVec2(330, 75), ImGuiInputTextFlags_ReadOnly);
                 ImGui::SetWindowFontScale(1.0f);
+                for (int i = 0; i < 3; i++) {
 
-                if (ImGui::Button("C", basicButton)) {}ImGui::SameLine();
-                if (ImGui::Button("sin", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "sin "); }ImGui::SameLine();
-                if (ImGui::Button("cos", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "cos "); }ImGui::SameLine();
+                    ImGui::Dummy(basicButton); ImGui::SameLine(); // adds spacing for the clear button
+                }
+                if (ImGui::Button("C", basicButton)) {
+
+                    calculateHelper.Clear(inputBuffer); 
+
+                }
+
+                if (ImGui::Button("<-", basicButton)) { calculateHelper.Backspace(inputBuffer); }
+                ImGui::SameLine();
+                if (ImGui::Button("sin", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "sin "); }
+                ImGui::SameLine();
+                if (ImGui::Button("cos", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "cos "); }
+                ImGui::SameLine();
                 if (ImGui::Button("tan", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "tan "); }
 
-                if (ImGui::Button("7", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "7"); } ImGui::SameLine();
-                if (ImGui::Button("8", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "8"); } ImGui::SameLine();
-                if (ImGui::Button("9", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "9"); } ImGui::SameLine();
+
+
+                if (ImGui::Button("7", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "7"); }
+                ImGui::SameLine();
+                if (ImGui::Button("8", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "8"); }
+                ImGui::SameLine();
+                if (ImGui::Button("9", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "9"); }
+                ImGui::SameLine();
                 if (ImGui::Button("/", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "/"); }
 
-                if (ImGui::Button("4", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "4"); } ImGui::SameLine();
-                if (ImGui::Button("5", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "5"); } ImGui::SameLine();
-                if (ImGui::Button("6", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "6"); } ImGui::SameLine();
+
+
+                if (ImGui::Button("4", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "4"); }
+                ImGui::SameLine();
+                if (ImGui::Button("5", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "5"); }
+                ImGui::SameLine();
+                if (ImGui::Button("6", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "6"); }
+                ImGui::SameLine();
                 if (ImGui::Button("*", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "*"); }
 
-                if (ImGui::Button("1", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "1"); } ImGui::SameLine();
-                if (ImGui::Button("2", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "2"); } ImGui::SameLine();
-                if (ImGui::Button("3", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "3"); } ImGui::SameLine();
+
+
+                if (ImGui::Button("1", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "1"); }
+                ImGui::SameLine();
+                if (ImGui::Button("2", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "2"); }
+                ImGui::SameLine();
+                if (ImGui::Button("3", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "3"); } 
+                ImGui::SameLine();
                 if (ImGui::Button("-", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "-"); }
 
 
-                if (ImGui::Button("0", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "0"); } ImGui::SameLine();
-                if (ImGui::Button(".", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "."); } ImGui::SameLine();
-
+                if (ImGui::Button("0", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "0"); }
+                ImGui::SameLine();
+                if (ImGui::Button(".", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "."); }
+                ImGui::SameLine();
                 if (ImGui::Button("=", basicButton)) { 
 
                     calculateHelper.EvaluateExpression(inputBuffer, IM_ARRAYSIZE(inputBuffer));
