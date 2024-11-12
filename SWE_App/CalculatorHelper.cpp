@@ -17,26 +17,32 @@ double CalculatorHelper::EvaluateExpression(char* inputBuffer, unsigned int buff
 		snprintf(inputBuffer, bufferSize, "%.2f", result);
 		return result;
 	}
+	else if (!IsUnaryOperator(Token)) {
+		ss.clear();
+		ss.str(input);
+		double num1;
+		double num2;
+		char operation;
+		//if (!(ss >> operation >> num2)) {
+		//	snprintf(inputBuffer, bufferSize, "%.2f", num1);
+		//	return num1;
+		//}
 
-	double num1 = std::stod(Token);
-	double num2 = 0;
-	char operation = 0;
-	
 
-	ss >> operation >> num2;
-	double result = 0;
+		ss >> num1 >> operation >> num2;
+		double result = 0;
 
-	switch (operation) {
-	case '+': result = num1 + num2; break;
-	case '-': result = num1 - num2; break;
-	case '*': result = num1 * num2; break;
-	case '/': result = (num2 != 0) ? num1 / num2 : 0; break;
-	case '%': result = fmod(num1, num2); break;
+		switch (operation) {
+		case '+': result = num1 + num2; break;
+		case '-': result = num1 - num2; break;
+		case '*': result = num1 * num2; break;
+		case '/': result = (num2 != 0) ? num1 / num2 : 0; break;
+		case '%': result = fmod(num1, num2); break;
 
+		}
+		snprintf(inputBuffer, bufferSize, "%.2f", result);
+		return result;
 	}
-	snprintf(inputBuffer, bufferSize, "%.2f", result);
-	return result;
-
 }
 
 void CalculatorHelper::Clear(char* inputBuffer)
@@ -46,7 +52,7 @@ void CalculatorHelper::Clear(char* inputBuffer)
 
 void CalculatorHelper::Backspace(char* inputBuffer)
 {
-	unsigned int len = strlen(inputBuffer);
+	size_t len = strlen(inputBuffer);
 
 	if (len == 0) { return; };
 
