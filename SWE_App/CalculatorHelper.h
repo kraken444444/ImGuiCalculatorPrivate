@@ -4,6 +4,7 @@
 #include <cstring>
 #include <sstream>
 #include <cmath>
+#include <math.h>
 class CalculatorHelper
 {
 public:
@@ -14,5 +15,8 @@ public:
 	void AddDecimal(char* inputBuffer, unsigned int bufferSize);
 	void ToggleNegative(char* inputBuffer, unsigned int bufferSize);
 	bool IsUnaryOperator(const std::string& op);
+	
+
+	double EvaluateUnaryOperation(const std::string& oper, double value);
 };
 
