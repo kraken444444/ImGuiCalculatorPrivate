@@ -68,7 +68,6 @@ int main(int, char**)
 
 
 
-
     while (!done)
     {
         SDL_Event event;
