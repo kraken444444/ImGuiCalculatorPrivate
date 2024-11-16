@@ -111,23 +111,35 @@ int main(int, char**)
                 ImGui::SetWindowFontScale(4.0f);
                 ImGui::InputTextMultiline("##Display", inputBuffer, IM_ARRAYSIZE(inputBuffer), ImVec2(330, 75), ImGuiInputTextFlags_ReadOnly);
                 ImGui::SetWindowFontScale(1.0f);
-                for (int i = 0; i < 3; i++) {
+
+
+                for (int i = 0; i < 1; i++) {
 
                     ImGui::Dummy(basicButton); ImGui::SameLine(); // adds spacing for the clear button
                 }
+                if (ImGui::Button("+/-", basicButton)) {
+                    calculateHelper.ToggleNegative(inputBuffer, IM_ARRAYSIZE(inputBuffer));
+                }
+                ImGui::SameLine();
+                if (ImGui::Button("<-", basicButton)) { calculateHelper.Backspace(inputBuffer); }
+                ImGui::SameLine();
+
+              
+
                 if (ImGui::Button("C", basicButton)) {
 
                     calculateHelper.Clear(inputBuffer); 
 
                 }
 
-                if (ImGui::Button("<-", basicButton)) { calculateHelper.Backspace(inputBuffer); }
+                if (ImGui::Button("%", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "%"); }
                 ImGui::SameLine();
                 if (ImGui::Button("sin", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "sin "); }
                 ImGui::SameLine();
                 if (ImGui::Button("cos", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "cos "); }
                 ImGui::SameLine();
                 if (ImGui::Button("tan", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "tan "); }
+
 
 
 
