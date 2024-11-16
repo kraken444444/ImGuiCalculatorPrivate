@@ -192,21 +192,6 @@ bool CalculatorHelper::isOperator(char c)
 	return c == '+' || c == '-' || c == '*' || c == '/' || c == '%';
 }
 
-
-
-int CalculatorHelper::GetOperatorPrio(char op)
-{
-	switch (op) {
-	case '+': case '-': return 1;
-	case '*': case '/': case '%': return 2;
-	default: return -1;
-	}
-}
-
-
-
-
-
 double CalculatorHelper::EvaluateUnaryOperation(const std::string& oper, double value)
 {
 
