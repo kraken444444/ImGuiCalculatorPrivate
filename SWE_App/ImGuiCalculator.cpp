@@ -5,7 +5,6 @@
 #include <SDL.h>
 #include <string>
 #include <windows.h>
-#include <SDL_config_windows.h>
 #include <SDL_syswm.h>
 #include <unordered_map>
 #include "CalculatorHelper.h"

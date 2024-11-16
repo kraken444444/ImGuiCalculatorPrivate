@@ -145,18 +145,19 @@
     <ClCompile Include="..\..\imguiSource\backends\imgui_impl_sdl2.cpp" />
     <ClCompile Include="..\..\imguiSource\backends\imgui_impl_sdlrenderer2.cpp" />
     <ClCompile Include="..\..\imguiSource\imgui.cpp" />
-    <ClCompile Include="..\..\imguiSource\imgui_demo.cpp" />
-    <ClCompile Include="..\..\imguiSource\imgui_draw.cpp" />
     <ClCompile Include="..\..\imguiSource\imgui_tables.cpp" />
     <ClCompile Include="..\..\imguiSource\imgui_widgets.cpp" />
     <ClCompile Include="CalculatorHelper.cpp" />
     <ClCompile Include="ImGuiCalculator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CalculatorHelper.h" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CalculatorHelper.h" />
+    <Text Include="..\..\..\..\Desktop\READMEIMGUIWITHSDL.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
