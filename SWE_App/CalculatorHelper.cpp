@@ -3,79 +3,122 @@
 
 double CalculatorHelper::EvaluateExpression(char* inputBuffer, unsigned int bufferSize)
 {
+
+    //Spaghetti monster
+    //converting input buffer to a string for handling
     std::string input(inputBuffer);
 
+    //checks if its a unary operator
     std::stringstream ss(input);
     std::string firstToken;
     ss >> firstToken;
+    int tokenLength = 1;
     if (IsUnaryOperator(firstToken)) {
         double value;
-        ss >> value;
+        ss >> value; //gets the number after sin/cos/tan
         double result = EvaluateUnaryOperation(firstToken, value);
         snprintf(inputBuffer, bufferSize, "%.9f", result);
         return result;
     }
 
-    // Tokenize input
-    std::vector<std::string> tokens = TokenizeInput(input);
+    std::vector<std::string> tokens;
+    std::string number;
+    bool lastWasOperator = true; // true at start for first negative number
+
+    for (unsigned int i = 0; i < input.length(); i++) {
+        char c = input[i];
+
+        if (std::isspace(c)) continue;  //skips white space in string
+
+        //handles numbers, decimals, and negative numbers and builds up the number string
+        if (std::isdigit(c) || c == '.' || (c == '-' && lastWasOperator && i + 1 < input.length() && std::isdigit(input[i + 1]))) {
+            number += c;                
+            lastWasOperator = false;
+        }
+        //handles the operators
+        else if (isOperator(c)) {
+            if (!number.empty()) {
+                tokens.push_back(number); //saves accumulated number
+                number.clear();
+            }
+            tokens.push_back(std::string(tokenLength, c)); //saves the operator
+            lastWasOperator = true;
+        }
+    }
+    //pushes back if not empty yet
+    if (!number.empty()) {
+        tokens.push_back(number);
+    }
 
     std::queue<std::string> output;
     std::stack<char> operators;
 
-    for (const std::string& token : tokens) {
+    for (const auto& token : tokens) {
         if (token.empty()) continue;
 
-        char firstChar = token[0];
-
-        // If token is a number
-        if (std::isdigit(firstChar) || (firstChar == '-' && token.length() > 1)) {
-            output.push(token);
+        // checking if its a number(also negative)
+        if (std::isdigit(token[0]) || (token[0] == '-' && token.length() > 1 && std::isdigit(token[1]))) {
+            output.push(token); // numbers go to output if it's a number
         }
-        else if (isOperator(firstChar)) {
-            while (!operators.empty() &&
-                GetOperatorPrio(operators.top()) >= GetOperatorPrio(firstChar)) {
+        // if its an operator it goes to output
+        else if (token.length() == 1 && isOperator(token[0])) {
+            while (!operators.empty() && GetOperatorPrio(operators.top()) >= GetOperatorPrio(token[0])) {
                 output.push(std::string(1, operators.top()));
                 operators.pop();
             }
-            operators.push(firstChar);
+            operators.push(token[0]); 
         }
     }
-
+    // remaining operators
     while (!operators.empty()) {
-        if (operators.top() != '(') {
-            output.push(std::string(1, operators.top()));
-        }
+        output.push(std::string(1, operators.top()));
         operators.pop();
     }
 
-    std::stack<double> values;
+    std::stack<double> values; //stack of doubles for holding numbers during calculation
+
     while (!output.empty()) {
         std::string token = output.front();
         output.pop();
 
-        if (!token.empty() && isOperator(token[0])) {
-            if (values.size() < 2) {
+        //if its an operator
+        if (token.length() == 1 && isOperator(token[0])) {
+            if (values.size() < 2) { // at least 2 numbers for an operation
                 snprintf(inputBuffer, bufferSize, "Invalid");
                 return 0;
             }
-            double b = values.top(); values.pop();
+            double b = values.top(); values.pop();// numbers for operations
             double a = values.top(); values.pop();
-            values.push(ApplyOperation(b, a, token[0]));
+
+            double result;
+            switch (token[0]) {
+            case '+': result = a + b; break;
+            case '-': result = a - b; break;
+            case '*': result = a * b; break;
+            case '/':
+                if (b == 0) { // no dividing by zero! what are you? crazy? 
+                    snprintf(inputBuffer, bufferSize, "Invalid");
+                    return 0;
+                }
+                result = a / b;
+                break;
+            case '%':
+                if (b == 0) { //don't even think about it
+                    snprintf(inputBuffer, bufferSize, "Invalid");
+                    return 0;
+                }
+                result = fmod(a, b);
+                break;
+            default:
+                snprintf(inputBuffer, bufferSize, "Invalid");
+                return 0;
+            }
+            values.push(result); //result goes on the stack
         }
         else {
-            try {
-                values.push(std::stod(token));
-            }
-            catch (const std::exception& e) {
-                snprintf(inputBuffer, bufferSize, "Invalid");
-                return 0;
-            }
+            
+                values.push(std::stod(token)); //cast string to a double
         }
-    }
-
-    if (values.empty()) {
-        snprintf(inputBuffer, bufferSize, "Invalid");
-        return 0;
     }
 
     double result = values.top();
@@ -133,8 +176,7 @@ void CalculatorHelper::ToggleNegative(char* inputBuffer, unsigned int bufferSize
 		snprintf(inputBuffer, bufferSize, "%s", current.c_str());
 	}
 	else {
-		std::string temp = "-" + current;
-		snprintf(inputBuffer, bufferSize, "%s", temp.c_str());
+		snprintf(inputBuffer, bufferSize, "%s", current.c_str());
 
 	}
 
@@ -150,20 +192,7 @@ bool CalculatorHelper::isOperator(char c)
 	return c == '+' || c == '-' || c == '*' || c == '/' || c == '%';
 }
 
-double CalculatorHelper::ApplyOperation(double a, double b, char op)
-{
 
-	
-	switch (op) {
-	case '+': return a + b; 
-	case '-':return a - b; 
-	case '*': return a * b; 
-	case '/': return (b != NULL) ? a / b : NULL; 
-	case '%': return fmod(a, b); 
-	default: return NULL;
-	}
-	
-}
 
 int CalculatorHelper::GetOperatorPrio(char op)
 {
@@ -174,54 +203,7 @@ int CalculatorHelper::GetOperatorPrio(char op)
 	}
 }
 
-std::vector<std::string> CalculatorHelper::TokenizeInput(const std::string& input)
-{
 
-	char space = ' ';
-
-	std::vector<std::string> tokens;
-	std::string currentNumber;
-	int strLength = 1;
-	for (unsigned int i = 0; i < input.length(); i++) {
-		char c = input[i];
-
-		if (c == space) {
-			if (!currentNumber.empty()) {
-				tokens.push_back(currentNumber);
-				currentNumber.clear();
-			}
-			continue;
-		}
-
-		if (c == '-') {
-			if (i == 0 || (i > 0 && isOperator(input[i - 1]))) {
-				currentNumber += c;
-			}
-			else {
-				if (!currentNumber.empty()) {
-					tokens.push_back(currentNumber);
-					currentNumber.clear();
-				}
-				tokens.push_back(std::string(strLength, c));
-			}
-		}
-
-		else if (std::isdigit(c) || c == '.') {
-			currentNumber += c;
-		}
-		else if (isOperator(c)) {
-			if (!currentNumber.empty()) {
-				tokens.push_back(currentNumber);
-				currentNumber.clear();
-			}
-			tokens.push_back(std::string(strLength, c));
-		}
-	}
-	if (!currentNumber.empty()) {
-		tokens.push_back(currentNumber);
-	}
-	return tokens;
-}
 
 
 
