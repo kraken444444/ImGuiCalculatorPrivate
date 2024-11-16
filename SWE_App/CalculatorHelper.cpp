@@ -4,7 +4,7 @@
 double CalculatorHelper::EvaluateExpression(char* inputBuffer, unsigned int bufferSize)
 {
 
-    //Spaghetti monster
+    //Spaghetti monster 
     //converting input buffer to a string for handling
     std::string input(inputBuffer);
 
@@ -122,7 +122,7 @@ double CalculatorHelper::EvaluateExpression(char* inputBuffer, unsigned int buff
     }
 
     double result = values.top();
-    snprintf(inputBuffer, bufferSize, "%.4f", result);
+    FormatOutput(inputBuffer, bufferSize, result);
     return result;
 }
 
@@ -191,6 +191,32 @@ bool CalculatorHelper::isOperator(char c)
 {
 	return c == '+' || c == '-' || c == '*' || c == '/' || c == '%';
 }
+
+
+
+int CalculatorHelper::GetOperatorPrio(char op)
+{
+	switch (op) {
+	case '+': case '-': return 1;
+	case '*': case '/': case '%': return 2;
+	default: return -1;
+	}
+}
+
+void CalculatorHelper::FormatOutput(char* buffer, unsigned int bufferSize, double value)
+{
+    if (value == static_cast<unsigned int>(value)) {
+        snprintf(buffer, bufferSize, "%.0f", value);
+    }
+    else {
+        snprintf(buffer, bufferSize, "%.4f", value);
+    }
+
+}
+
+
+
+
 
 double CalculatorHelper::EvaluateUnaryOperation(const std::string& oper, double value)
 {
