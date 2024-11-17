@@ -19,7 +19,6 @@ public:
 	bool isOperator(char c);
 	int GetOperatorPrio(char op);
 	void FormatOutput(char* buffer, unsigned int bufferSize, double value);
-
 	double EvaluateUnaryOperation(const std::string& oper, double value);
 };
 
