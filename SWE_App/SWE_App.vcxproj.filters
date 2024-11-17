@@ -21,25 +21,25 @@
     <ClCompile Include="CalculatorHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\imguiSource\imgui.cpp">
+    <ClCompile Include="imgui\imgui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\imguiSource\imgui_demo.cpp">
+    <ClCompile Include="imgui\imgui_demo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\imguiSource\imgui_draw.cpp">
+    <ClCompile Include="imgui\imgui_draw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\imguiSource\imgui_tables.cpp">
+    <ClCompile Include="imgui\imgui_tables.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\imguiSource\imgui_widgets.cpp">
+    <ClCompile Include="imgui\imgui_widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\imguiSource\backends\imgui_impl_sdl2.cpp">
+    <ClCompile Include="imgui\backends\imgui_impl_sdl2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\imguiSource\backends\imgui_impl_sdlrenderer2.cpp">
+    <ClCompile Include="imgui\backends\imgui_impl_sdlrenderer2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
