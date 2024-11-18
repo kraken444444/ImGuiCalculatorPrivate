@@ -122,10 +122,11 @@ double CalculatorHelper::EvaluateExpression(char* inputBuffer, unsigned int buff
                 snprintf(inputBuffer, bufferSize, "Invalid");
                 return -1;
             }
-            double value = values.top();
-            values.pop();
-            double result = EvaluateUnaryOperation(token, value);
-            values.push(result);
+                double value = values.top();
+                values.pop();
+                double result = EvaluateUnaryOperation(token, value);
+                values.push(result);
+            
         }
         else if (token.length() == 1 && isOperator(token[0])) {
             if (values.size() < 2) {
@@ -268,8 +269,13 @@ double CalculatorHelper::EvaluateUnaryOperation(const std::string& oper, double 
     if (oper == "sin") return sin(value);
     if (oper == "cos") return cos(value);
     if (oper == "tan") return tan(value);
+    if (oper == "-tan") return -tan(value);
+    if (oper == "-cos") return -cos(value);
+    if (oper == "-sin") return -sin(value);
 
 
     return value;
 }
+
+
 
