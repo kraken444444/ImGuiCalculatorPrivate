@@ -60,7 +60,7 @@ int main(int, char**)
     ImVec2 basicButton(100, 50);
      ImVec4 window_color = ImVec4(0.264f, 0.247f, 0.311f, 1.0f);
      bool startingWindow = true;
-     CalculatorHelper calculateHelper;
+     CalculatorHelper* calculateHelper = CalculatorHelper::getInstance();
 
      
 
@@ -116,17 +116,17 @@ int main(int, char**)
                     ImGui::Dummy(basicButton); ImGui::SameLine(); // adds spacing for the clear button
                 }
                 if (ImGui::Button("+/-", basicButton)) {
-                    calculateHelper.ToggleNegative(inputBuffer, IM_ARRAYSIZE(inputBuffer));
+                    calculateHelper->ToggleNegative(inputBuffer, IM_ARRAYSIZE(inputBuffer));
                 }
                 ImGui::SameLine();
-                if (ImGui::Button("<-", basicButton)) { calculateHelper.Backspace(inputBuffer); }
+                if (ImGui::Button("<-", basicButton)) { calculateHelper->Backspace(inputBuffer); }
                 ImGui::SameLine();
 
               
 
                 if (ImGui::Button("C", basicButton)) {
 
-                    calculateHelper.Clear(inputBuffer); 
+                    calculateHelper->Clear(inputBuffer); 
 
                 }
 
@@ -172,11 +172,11 @@ int main(int, char**)
 
                 if (ImGui::Button("0", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "0"); }
                 ImGui::SameLine();
-                if (ImGui::Button(".", basicButton)) { calculateHelper.AddDecimal(inputBuffer, IM_ARRAYSIZE(inputBuffer)); }
+                if (ImGui::Button(".", basicButton)) { calculateHelper->AddDecimal(inputBuffer, IM_ARRAYSIZE(inputBuffer)); }
                 ImGui::SameLine();
                 if (ImGui::Button("=", basicButton)) { 
 
-                    calculateHelper.EvaluateExpression(inputBuffer, IM_ARRAYSIZE(inputBuffer));
+                    calculateHelper->EvaluateExpression(inputBuffer, IM_ARRAYSIZE(inputBuffer));
 
                 } ImGui::SameLine();
                 if (ImGui::Button("+", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "+"); }

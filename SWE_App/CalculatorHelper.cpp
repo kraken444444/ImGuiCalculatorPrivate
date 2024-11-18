@@ -1,6 +1,5 @@
 #include "CalculatorHelper.h"
-#define M_PI 3.14159265358979323846
-
+CalculatorHelper* CalculatorHelper::instance = nullptr;
 
 double CalculatorHelper::EvaluateExpression(char* inputBuffer, unsigned int bufferSize)
 {
@@ -32,7 +31,6 @@ double CalculatorHelper::EvaluateExpression(char* inputBuffer, unsigned int buff
                 tokens.push_back("-" + possibleTrig);
                 i += 3; //skips if negative trig function
                 expectNumber = true;
-                continue;
             }
         }
 
@@ -46,7 +44,6 @@ double CalculatorHelper::EvaluateExpression(char* inputBuffer, unsigned int buff
                 tokens.push_back(possibleTrig);
                 i += 2; //skips if its a trig function to keep our loop correct
                 expectNumber = true;
-                continue;
             }
         }
 

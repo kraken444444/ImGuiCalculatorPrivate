@@ -9,9 +9,24 @@
 #include <iostream>
 class CalculatorHelper
 {
-public:
-	double EvaluateExpression(char* inputBuffer, unsigned int bufferSize);
+private:
+	CalculatorHelper() {}
 
+	CalculatorHelper(const CalculatorHelper&) = delete;
+	CalculatorHelper& operator= (const CalculatorHelper&) = delete;
+
+	static CalculatorHelper* instance;
+
+public:
+
+	static CalculatorHelper* getInstance() {
+		if (instance == nullptr) {
+			instance = new CalculatorHelper();
+		}
+		return instance;
+	}
+
+	double EvaluateExpression(char* inputBuffer, unsigned int bufferSize);
 	void Clear(char* inputBuffer);
 	void Backspace(char* inputBuffer);
 	void AddDecimal(char* inputBuffer, unsigned int bufferSize);
