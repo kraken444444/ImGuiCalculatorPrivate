@@ -20,10 +20,10 @@ double CalculatorHelper::EvaluateExpression(char* inputBuffer, unsigned int buff
     for (unsigned int i = 0; i < input.length(); i++) {
         char index = input[i];
 
-        if (std::isspace(index)) continue;
+        if (std::isspace(index)) continue; // skips blank space 
 
         if (index == '-' && i + 3 < input.length()) { //checking for trig function
-            std::string possibleTrig = input.substr(i + 1, 3);
+            std::string possibleTrig = input.substr(i + 1, 3); //checking for possible negative trig function
             if (possibleTrig == "sin" || possibleTrig == "cos" || possibleTrig == "tan") {
                 if (!currentNumber.empty()) {
                     tokens.push_back(currentNumber);
@@ -37,14 +37,14 @@ double CalculatorHelper::EvaluateExpression(char* inputBuffer, unsigned int buff
         }
 
         if (i + 2 < input.length()) {
-            std::string possibleTrig = input.substr(i, 3);
+            std::string possibleTrig = input.substr(i, 3); //checking for regular trig function
             if (possibleTrig == "sin" || possibleTrig == "cos" || possibleTrig == "tan") {
                 if (!currentNumber.empty()) {
                     tokens.push_back(currentNumber);
                     currentNumber.clear();
                 }
                 tokens.push_back(possibleTrig);
-                i += 2; //skips if its a trig function
+                i += 2; //skips if its a trig function to keep our loop correct
                 expectNumber = true;
                 continue;
             }
