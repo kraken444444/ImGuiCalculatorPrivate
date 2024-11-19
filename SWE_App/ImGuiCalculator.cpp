@@ -8,6 +8,11 @@
 #include <SDL_syswm.h>
 #include <unordered_map>
 #include "CalculatorHelper.h"
+#include "ButtonHelper.h"
+
+
+
+
 
 
 int main(int, char**)
@@ -54,18 +59,24 @@ int main(int, char**)
     bool done = false;
 
 
-////////////////////////////////////////////////////////////////////////////////////////////DECLARATIONS
+//DECLARATIONS
 
     static char inputBuffer[512] = "";
-    ImVec2 basicButton(100, 50);
+   // ImVec2 basic_button_size(100, 50);o
+    bool close_application = false;
      ImVec4 window_color = ImVec4(0.264f, 0.247f, 0.311f, 1.0f);
+     static float purp_color[4] = { 0.255f, 0.212f, 0.38f, 1.0f };
+     static float operand_button_color[4] = { 0.302f, 0.294f, 0.439f, 1.0f };
+     static float clear_button_color[4] = { 0.729f, 0.173f, 0.122f, 1.0f };
      bool startingWindow = true;
+     ImVec2 basic_button_size(75, 60);
+     static ImVec4 button_frame_color = ImVec4(0.165f, 0.063f, 0.459f, 1.0f);
+     ButtonHelper buttonHelper;
      CalculatorHelper* calculateHelper = CalculatorHelper::getInstance();
-
-     
-
-
-
+     ImFontConfig fontConfig;
+     fontConfig.RasterizerDensity = 3.0f;
+     ImFont* myFont = io.Fonts->AddFontFromFileTTF("Unibody8Pro-Regular.otf", 20.0f, &fontConfig);
+    
 
 
     while (!done)
@@ -78,6 +89,7 @@ int main(int, char**)
                 done = true;
             if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(window))
                 done = true;
+
         }
         if (SDL_GetWindowFlags(window) & SDL_WINDOW_MINIMIZED)
         {
@@ -91,9 +103,7 @@ int main(int, char**)
         ImGui_ImplSDL2_NewFrame();
         ImGui::NewFrame();
 
-        ImVec2 basicButton(75, 60);
-
-        static ImVec4 window_color = ImVec4(0.264f, 0.247f, 0.311f, 1.0f);
+       
 
         ImGui::GetStyle().AntiAliasedFill = false;
         ImGui::GetStyle().AntiAliasedLines = false;
@@ -101,88 +111,143 @@ int main(int, char**)
         
 
         {
-
             ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = window_color;
             if (startingWindow) {
-                ImGui::SetNextWindowSize(ImVec2(350, 475));
-                ImGui::Begin("Calculator", &startingWindow, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar);
+                ImGui::SetNextWindowSize(ImVec2(350, 500));
+                ImGui::Begin("The Big Sphagetilator", &startingWindow, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollWithMouse);
+                ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 1.0f);
+                ImGui::PushStyleColor(ImGuiCol_Border, button_frame_color);
                 ImGui::SetWindowFontScale(4.0f);
                 ImGui::InputTextMultiline("##Display", inputBuffer, IM_ARRAYSIZE(inputBuffer), ImVec2(330, 75), ImGuiInputTextFlags_ReadOnly);
                 ImGui::SetWindowFontScale(1.0f);
 
-
-                for (int i = 0; i < 1; i++) {
-
-                    ImGui::Dummy(basicButton); ImGui::SameLine(); // adds spacing for the clear button
-                }
-                if (ImGui::Button("+/-", basicButton)) {
+                ImGui::Dummy(basic_button_size);
+                ImGui::SameLine();
+                    buttonHelper.SetButtonColor(purp_color);
+                    buttonHelper.SetButtonColor(operand_button_color);
+                if (ImGui::Button("+/-", basic_button_size)) {
                     calculateHelper->ToggleNegative(inputBuffer, IM_ARRAYSIZE(inputBuffer));
                 }
                 ImGui::SameLine();
-                if (ImGui::Button("<-", basicButton)) { calculateHelper->Backspace(inputBuffer); }
+                if (ImGui::Button("<-", basic_button_size)) {
+                    calculateHelper->Backspace(inputBuffer);
+                }
                 ImGui::SameLine();
-
-              
-
-                if (ImGui::Button("C", basicButton)) {
+                buttonHelper.PopButtonColor();
+                
+                buttonHelper.SetButtonColor(clear_button_color);
+                if (ImGui::Button("C", basic_button_size)) {
 
                     calculateHelper->Clear(inputBuffer); 
 
                 }
-
-                if (ImGui::Button("%", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "%"); }
+                buttonHelper.PopButtonColor();
+                buttonHelper.SetButtonColor(operand_button_color);
+                if (ImGui::Button("tan", basic_button_size)) {
+                    strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "tan ");
+                }
                 ImGui::SameLine();
-                if (ImGui::Button("sin", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "sin "); }
+                if (ImGui::Button("sin", basic_button_size)) {
+                    strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "sin "); 
+                }
                 ImGui::SameLine();
-                if (ImGui::Button("cos", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "cos "); }
+                if (ImGui::Button("cos", basic_button_size)) {
+                    strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "cos ");
+                }
                 ImGui::SameLine();
-                if (ImGui::Button("tan", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "tan "); }
-
-
-
-
-                if (ImGui::Button("7", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "7"); }
-                ImGui::SameLine();
-                if (ImGui::Button("8", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "8"); }
-                ImGui::SameLine();
-                if (ImGui::Button("9", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "9"); }
-                ImGui::SameLine();
-                if (ImGui::Button("/", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "/"); }
-
+                if (ImGui::Button("%", basic_button_size)) {
+                    strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "%");
+                }
+                buttonHelper.PopButtonColor();
 
 
-                if (ImGui::Button("4", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "4"); }
+                if (ImGui::Button("7", basic_button_size)) {
+                    strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "7");
+                }
                 ImGui::SameLine();
-                if (ImGui::Button("5", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "5"); }
+                if (ImGui::Button("8", basic_button_size)) {
+                    strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "8");
+                }
                 ImGui::SameLine();
-                if (ImGui::Button("6", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "6"); }
+                if (ImGui::Button("9", basic_button_size)) {
+                    strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "9");
+                }
                 ImGui::SameLine();
-                if (ImGui::Button("*", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "*"); }
+                buttonHelper.SetButtonColor(operand_button_color);
+                if (ImGui::Button("/", basic_button_size)) {
+                    strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "/");
+                } buttonHelper.PopButtonColor();
 
 
 
-                if (ImGui::Button("1", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "1"); }
+                if (ImGui::Button("4", basic_button_size)) {
+                    strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "4");
+                }
                 ImGui::SameLine();
-                if (ImGui::Button("2", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "2"); }
+                if (ImGui::Button("5", basic_button_size)) { 
+                    strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "5");
+                }
                 ImGui::SameLine();
-                if (ImGui::Button("3", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "3"); } 
+                if (ImGui::Button("6", basic_button_size)) {
+                    strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "6");
+                }
                 ImGui::SameLine();
-                if (ImGui::Button("-", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "-"); }
+                buttonHelper.SetButtonColor(operand_button_color);
+                if (ImGui::Button("*", basic_button_size)) {
+                    strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "*");
+                }buttonHelper.PopButtonColor();
 
 
-                if (ImGui::Button("0", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "0"); }
+
+                if (ImGui::Button("1", basic_button_size)) {
+                    strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "1");
+                }
                 ImGui::SameLine();
-                if (ImGui::Button(".", basicButton)) { calculateHelper->AddDecimal(inputBuffer, IM_ARRAYSIZE(inputBuffer)); }
+                if (ImGui::Button("2", basic_button_size)) { 
+                    strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "2");
+                }
                 ImGui::SameLine();
-                if (ImGui::Button("=", basicButton)) { 
+                if (ImGui::Button("3", basic_button_size)) {
+                    strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "3");
+                } 
+                ImGui::SameLine();
+                buttonHelper.SetButtonColor(operand_button_color);
+                if (ImGui::Button("-", basic_button_size)) { 
+                    strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "-");
+                }buttonHelper.PopButtonColor();
+
+
+                buttonHelper.SetButtonColor(operand_button_color);
+                if (ImGui::Button(".", basic_button_size)) { 
+                    calculateHelper->AddDecimal(inputBuffer, IM_ARRAYSIZE(inputBuffer)); 
+                }
+                buttonHelper.PopButtonColor();
+                ImGui::SameLine();
+                if (ImGui::Button("0", basic_button_size)) {
+                    strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "0");
+                }
+                buttonHelper.SetButtonColor(operand_button_color);
+                ImGui::SameLine();
+                if (ImGui::Button("=", basic_button_size)) { 
 
                     calculateHelper->EvaluateExpression(inputBuffer, IM_ARRAYSIZE(inputBuffer));
 
-                } ImGui::SameLine();
-                if (ImGui::Button("+", basicButton)) { strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "+"); }
-
-
+                }
+                ImGui::SameLine();
+                if (ImGui::Button("+", basic_button_size)) {
+                    strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "+");
+                }
+                buttonHelper.PopButtonColor();
+                buttonHelper.PopButtonColor();
+                ImGui::PopStyleColor();
+                ImGui::PopStyleVar();
                     ImGui::End();
+                    if (startingWindow == false) {
+                        ImGui_ImplSDLRenderer2_Shutdown();
+                        ImGui_ImplSDL2_Shutdown();
+                        ImGui::DestroyContext();
+                        exit(0);
+                    }
             }
         }
     

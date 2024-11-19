@@ -120,7 +120,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)SWE_App\imgui\backends;$(SolutionDir)SWE_App\imgui\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -135,13 +135,14 @@
       <AdditionalIncludeDirectories>$(SolutionDir)SWE_App\imgui\backends;$(SolutionDir)SWE_App\imgui\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ButtonHelper.cpp" />
     <ClCompile Include="CalculatorHelper.cpp" />
     <ClCompile Include="ImGuiCalculator.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_sdl2.cpp" />
@@ -153,6 +154,7 @@
     <ClCompile Include="imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ButtonHelper.h" />
     <ClInclude Include="CalculatorHelper.h" />
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +162,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\..\..\Desktop\READMEIMGUIWITHSDL.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Unibody8Pro-Regular.ttf.otf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
