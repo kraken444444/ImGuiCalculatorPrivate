@@ -9,8 +9,18 @@
 #include <unordered_map>
 #include "CalculatorHelper.h"
 #include "ButtonHelper.h"
+#include "SDL_image.h"
 
 
+static SDL_Surface *load_image(char* buff, int size) {
+    SDL_RWops* rw = SDL_RWFromMem(buff, size);
+    SDL_Surface* temp = IMG_Load_RW(rw, 1);
+    SDL_Surface* image;
+    SDL_FreeSurface(temp);
+
+    return image;
+} //WIP
+//TODO
 
 
 
@@ -18,7 +28,7 @@
 int main(int, char**)
 {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER);
-
+    SDL_Surface* surface = IMG_Load("image.png");
 
     SDL_DisplayMode displayMode;
     SDL_GetCurrentDisplayMode(0, &displayMode);
@@ -35,7 +45,6 @@ int main(int, char**)
     HWND hwnd = wmInfo.info.win.window; // extracts info from wmInfo and stores it inside HWND
     SetWindowLong(hwnd, GWL_EXSTYLE, GetWindowLong(hwnd, GWL_EXSTYLE) | WS_EX_LAYERED); //Sets window style, allowing it to be transparent
     SetLayeredWindowAttributes(hwnd, 0, 0, LWA_COLORKEY); // sets the window info of hwnd, LWA_COLORKEY sets it to transparent 0, 0, 0 color key is black, so any pixels matching will be transparent
-
 
 
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
@@ -62,7 +71,6 @@ int main(int, char**)
 //DECLARATIONS
 
     static char inputBuffer[512] = "";
-   // ImVec2 basic_button_size(100, 50);o
     bool close_application = false;
      ImVec4 window_color = ImVec4(0.264f, 0.247f, 0.311f, 1.0f);
      static float purp_color[4] = { 0.255f, 0.212f, 0.38f, 1.0f };
@@ -107,7 +115,7 @@ int main(int, char**)
 
         ImGui::GetStyle().AntiAliasedFill = false;
         ImGui::GetStyle().AntiAliasedLines = false;
-
+      
         
 
         {

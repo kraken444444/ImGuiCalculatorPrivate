@@ -47,12 +47,13 @@ double CalculatorHelper::EvaluateExpression(char* inputBuffer, unsigned int buff
             }
         }
 
-        if (index == '-') {
+        if (index == '-') { // check next index TODO
             if (expectNumber) {
-                currentNumber += index; //this is how im handling multiple - signs in the input, if user inputs -sin6 --sin6 this should work
-                expectNumber = false;
-            }
-            else {
+                if (std::isdigit(input[i + 1])) {
+                    currentNumber += index; //this is how im handling multiple - signs in the input, if user inputs -sin6 --sin6 this should work
+                    expectNumber = false;
+                }// there is a bug in here that is accidentally adding a - sign to numbers when it isnt supposed to, wtf am I doing
+            } else {
                 if (!currentNumber.empty()) {
                     tokens.push_back(currentNumber);
                     currentNumber.clear();
@@ -61,7 +62,7 @@ double CalculatorHelper::EvaluateExpression(char* inputBuffer, unsigned int buff
                 expectNumber = true;
             }
         }
-        else if (std::isdigit(index) || index == '.') {
+        else if (std::isdigit(index) || index == '.') { //TODO
             currentNumber += index; //could have used my own class to check if something is a number but std::isdigit works great for what i'm trying to do
             expectNumber = false;
         }
@@ -137,7 +138,7 @@ double CalculatorHelper::EvaluateExpression(char* inputBuffer, unsigned int buff
             double operand1 = values.top(); values.pop();
 
             double result;
-            //calcuations
+            //calculations
             switch (token[0]) {
             case '+': result = operand1 + operand2; break;
             case '-': result = operand1 - operand2; break;

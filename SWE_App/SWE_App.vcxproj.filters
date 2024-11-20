@@ -62,9 +62,4 @@
       <Filter>Source Files</Filter>
     </Text>
   </ItemGroup>
-  <ItemGroup>
-    <Font Include="Unibody8Pro-Regular.ttf.otf">
-      <Filter>Source Files</Filter>
-    </Font>
-  </ItemGroup>
 </Project>
