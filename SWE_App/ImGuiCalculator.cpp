@@ -9,18 +9,17 @@
 #include <unordered_map>
 #include "CalculatorHelper.h"
 #include "ButtonHelper.h"
-#include "SDL_image.h"
 
 
-static SDL_Surface *load_image(char* buff, int size) {
-    SDL_RWops* rw = SDL_RWFromMem(buff, size);
-    SDL_Surface* temp = IMG_Load_RW(rw, 1);
-    SDL_Surface* image;
-    SDL_FreeSurface(temp);
-
-    return image;
-} //WIP
-//TODO
+//static SDL_Surface *load_image(char* buff, int size) {
+//    SDL_RWops* rw = SDL_RWFromMem(buff, size);
+//    SDL_Surface* temp = IMG_Load_RW(rw, 1);
+//    SDL_Surface* image;
+//    SDL_FreeSurface(temp);
+//
+//    return image;
+//} //WIP
+////TODO
 
 
 
@@ -28,7 +27,7 @@ static SDL_Surface *load_image(char* buff, int size) {
 int main(int, char**)
 {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER);
-    SDL_Surface* surface = IMG_Load("image.png");
+  //  SDL_Surface* surface = IMG_Load("image.png");
 
     SDL_DisplayMode displayMode;
     SDL_GetCurrentDisplayMode(0, &displayMode);
@@ -83,7 +82,8 @@ int main(int, char**)
      CalculatorHelper* calculateHelper = CalculatorHelper::getInstance();
      ImFontConfig fontConfig;
      fontConfig.RasterizerDensity = 3.0f;
-     ImFont* myFont = io.Fonts->AddFontFromFileTTF("Unibody8Pro-Regular.otf", 20.0f, &fontConfig);
+     ImFont* myFont = io.Fonts->AddFontFromFileTTF("Unibody8Pro-Regular.otf", 16.0f, &fontConfig);
+     ImFont* biggerMyFont = io.Fonts->AddFontFromFileTTF("Unibody8Pro-Regular.otf", 20.0f, &fontConfig);
     
 
 
@@ -121,14 +121,17 @@ int main(int, char**)
         {
             ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = window_color;
             if (startingWindow) {
+                ImGui::PushFont(myFont);
                 ImGui::SetNextWindowSize(ImVec2(350, 500));
-                ImGui::Begin("The Big Sphagetilator", &startingWindow, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollWithMouse);
+                ImGui::Begin("The Big Sphagetilamaterificater", &startingWindow, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollWithMouse);
                 ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 1.0f);
                 ImGui::PushStyleColor(ImGuiCol_Border, button_frame_color);
                 ImGui::SetWindowFontScale(4.0f);
                 ImGui::InputTextMultiline("##Display", inputBuffer, IM_ARRAYSIZE(inputBuffer), ImVec2(330, 75), ImGuiInputTextFlags_ReadOnly);
                 ImGui::SetWindowFontScale(1.0f);
-
+                ImGui::PopFont();
+                
+                ImGui::PushFont(biggerMyFont);
                 ImGui::Dummy(basic_button_size);
                 ImGui::SameLine();
                     buttonHelper.SetButtonColor(purp_color);
@@ -245,6 +248,7 @@ int main(int, char**)
                 if (ImGui::Button("+", basic_button_size)) {
                     strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "+");
                 }
+                ImGui::PopFont();
                 buttonHelper.PopButtonColor();
                 buttonHelper.PopButtonColor();
                 ImGui::PopStyleColor();
