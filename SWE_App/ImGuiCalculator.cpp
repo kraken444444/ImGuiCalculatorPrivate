@@ -184,10 +184,12 @@ int main(int, char**)
                     strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "9");
                 }
                 ImGui::SameLine();
+
                 buttonHelper.SetButtonColor(operand_button_color);
                 if (ImGui::Button("/", basic_button_size)) {
                     strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "/");
-                } buttonHelper.PopButtonColor();
+                }
+                buttonHelper.PopButtonColor();
 
 
 
@@ -206,7 +208,8 @@ int main(int, char**)
                 buttonHelper.SetButtonColor(operand_button_color);
                 if (ImGui::Button("*", basic_button_size)) {
                     strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "*");
-                }buttonHelper.PopButtonColor();
+                }
+                buttonHelper.PopButtonColor();
 
 
 
@@ -225,7 +228,8 @@ int main(int, char**)
                 buttonHelper.SetButtonColor(operand_button_color);
                 if (ImGui::Button("-", basic_button_size)) { 
                     strcat_s(inputBuffer, IM_ARRAYSIZE(inputBuffer), "-");
-                }buttonHelper.PopButtonColor();
+                }
+                buttonHelper.PopButtonColor();
 
 
                 buttonHelper.SetButtonColor(operand_button_color);
@@ -270,7 +274,7 @@ int main(int, char**)
 
         ImGui::Render();
         SDL_RenderSetScale(renderer, io.DisplayFramebufferScale.x, io.DisplayFramebufferScale.y);
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0); // does some stuff to make window transparent
+       // SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0); // does some stuff to make window transparent
         SDL_RenderClear(renderer);
         ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), renderer);
         SDL_RenderPresent(renderer); 

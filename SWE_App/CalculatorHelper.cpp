@@ -37,10 +37,11 @@ double CalculatorHelper::EvaluateExpression(char* inputBuffer, unsigned int buff
         if (i + 2 < input.length()) {
             std::string possibleTrig = input.substr(i, 3); //checking for regular trig function
             if (possibleTrig == "sin" || possibleTrig == "cos" || possibleTrig == "tan") {
-                if (!currentNumber.empty()) {
-                    tokens.push_back(currentNumber);
-                    currentNumber.clear();
-                }
+                    if (!currentNumber.empty()) {
+                        tokens.push_back(currentNumber);
+                        currentNumber.clear();
+                    }
+                
                 tokens.push_back(possibleTrig);
                 i += 2; //skips if its a trig function to keep our loop correct
                 expectNumber = true;
@@ -62,7 +63,8 @@ double CalculatorHelper::EvaluateExpression(char* inputBuffer, unsigned int buff
                 expectNumber = true;
             }
         }
-        else if (std::isdigit(index) || index == '.') { //TODO
+
+        else if (std::isdigit(index) || index == '.') {
             currentNumber += index; //could have used my own class to check if something is a number but std::isdigit works great for what i'm trying to do
             expectNumber = false;
         }
@@ -227,7 +229,8 @@ void CalculatorHelper::ToggleNegative(char* inputBuffer, unsigned int bufferSize
         snprintf(inputBuffer, bufferSize, "%s", current.c_str());
     }
     else {
-        snprintf(inputBuffer, bufferSize, "%s", current.c_str());
+        std::string temp = "-" + current;
+        snprintf(inputBuffer, bufferSize, "%s", temp.c_str());
 
     }
 
